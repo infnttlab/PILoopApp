@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PI Loop</string>
+    <string name="steps_text">Edit number of steps</string>
+    <string name="calculate_button">Calculate PI</string>
+    <string name="java_checkbox">Java</string>
+    <string name="pi_label">PI:</string>
+    <string name="time_label">C++ Time (Chrono):</string>
+    <string name="time2_label">C++ Time:</string>
+    <string name="time3_label">Java Time:</string>
+</resources>
