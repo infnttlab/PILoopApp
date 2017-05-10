@@ -9,4 +9,5 @@
     <string name="time2_label">C++ Time:</string>
     <string name="time3_label">Java Time:</string>
     <string name="threads_spinner_title">Threads</string>
+    <string name="not_available">N/A</string>
 </resources>

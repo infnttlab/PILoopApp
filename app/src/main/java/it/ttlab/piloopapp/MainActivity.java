@@ -22,16 +22,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Activity mActivity;
-    private EditText editText;
-    private TextView piTextView;
     private static final String KEY_PI_TEXT = "key_pi_text";
-    //private TextView chronoTimeTextView;
-    private TextView cppTimeTextView;
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
-    private TextView javaTimeTextView;
     private static final String KEY_JAVA_TIME_TEXT = "key_java_time_text";
-    private CheckBox javaCheckBox;
-    private CheckBox cppCheckBox;
+    //private TextView chronoTimeTextView;
+
     private int threadsNum = 1;
 
     @Override
@@ -44,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putCharSequence(KEY_PI_TEXT,piTextView.getText());
-        outState.putCharSequence(KEY_CPP_TIME_TEXT,cppTimeTextView.getText());
-        outState.putCharSequence(KEY_JAVA_TIME_TEXT,javaTimeTextView.getText());
+        //outState.putCharSequence(KEY_PI_TEXT,piTextView.getText());
+        //outState.putCharSequence(KEY_CPP_TIME_TEXT,cppTimeTextView.getText());
+        //outState.putCharSequence(KEY_JAVA_TIME_TEXT,javaTimeTextView.getText());
     }
 
     @Override
@@ -78,21 +73,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         if (savedInstanceState != null) {
-            piTextView.setText(savedInstanceState.getCharSequence(KEY_PI_TEXT));
-            cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
-            javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
+            // piTextView.setText(savedInstanceState.getCharSequence(KEY_PI_TEXT));
+            // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
+            // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
         }
     }
 
     public void calculatePI(View view) {
-        editText = (EditText) findViewById(R.id.stepsEditText);
-        piTextView = (TextView) findViewById(R.id.PiTextView);
+
+        EditText editText = (EditText) findViewById(R.id.stepsEditText);
+        TextView piTextView = (TextView) findViewById(R.id.PiTextView);
         //chronoTimeTextView = (TextView) findViewById(R.id.ChronoTimeTextView);
-        cppTimeTextView = (TextView) findViewById(R.id.CppTimeTextView);
-        javaTimeTextView = (TextView) findViewById(R.id.JavaTimeTextView);
+        TextView cppTimeTextView = (TextView) findViewById(R.id.CppTimeTextView);
+        TextView javaTimeTextView = (TextView) findViewById(R.id.JavaTimeTextView);
         String stepsString = editText.getText().toString();
-        javaCheckBox = (CheckBox) findViewById(R.id.javaCheckBox);
-        cppCheckBox = (CheckBox) findViewById(R.id.cppCheckBox);
+        CheckBox javaCheckBox = (CheckBox) findViewById(R.id.javaCheckBox);
+        CheckBox cppCheckBox = (CheckBox) findViewById(R.id.cppCheckBox);
 
 
         long steps = Long.parseLong(stepsString);
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             //chronoTimeTextView.setText(String.valueOf(timeFromJNI(steps)));
             cppTimeTextView.setText(String.valueOf(elapsed1Seconds));
         }else{
-            cppTimeTextView.setText("N/A");
+            cppTimeTextView.setText(R.string.not_available);
         }
         //((Activity) context).runOnUiThread(new Runnable() {
         //    @Override
@@ -129,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             javaTimeTextView.setText(String.valueOf(elapsed2Seconds));
             //time3TextView.postInvalidate();
         }else{
-            javaTimeTextView.setText("N/A");
+            javaTimeTextView.setText(R.string.not_available);
         }
     }
 
