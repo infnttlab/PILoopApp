@@ -21,3 +21,21 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task printProps {
+    doLast {
+        println myProject
+        println System.properties['system']
+    }
+}
+
+task printProps2 {
+    doLast {
+        println myProject
+        println commandLineProjectProp
+        println gradlePropertiesProp
+        println systemProjectProp
+        println envProjectProp
+        println System.properties['system']
+    }
+}
