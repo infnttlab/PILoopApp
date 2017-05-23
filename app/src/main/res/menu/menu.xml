@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/miPi"
-        android:icon="@drawable/ic_action_pi"
+        android:icon="@drawable/ic_action_piwhite"
         android:tint="@color/colorAccent"
         app:showAsAction="ifRoom|withText"
         android:title="PI calculus">
     </item>
     <item
         android:id="@+id/miPrimes"
-        android:icon="@drawable/ic_action_primes"
+        android:icon="@drawable/ic_action_primeswhite"
         android:tint="@color/colorAccent"
         app:showAsAction="ifRoom|withText"
         android:title="Primes calculus">

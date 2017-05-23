@@ -5,18 +5,175 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="it.ttlab.piloopapp.PrimesActivity">
+
     <include
+        android:id="@+id/toolbar"
         layout="@layout/toolbar_menu"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:theme="@style/ToolbarTheme"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbar"
-        android:theme="@style/ToolbarTheme"
-        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
+    <EditText
+        android:id="@+id/stepsEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/primes_text"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <!--android:text="100"-->
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="calculatePrimes"
+        android:text="@string/primes_calculate_button"
+        app:layout_constraintLeft_toRightOf="@+id/stepsEditText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/PiLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/primes_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepsEditText" />
+
+    <TextView
+        android:id="@+id/ChronoTimeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_label"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PiLabelTextView" />
+
+    <TextView
+        android:id="@+id/CppTimeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/time2_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChronoTimeLabelTextView" />
+
+    <TextView
+        android:id="@+id/JavaTimeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/time3_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CppTimeLabelTextView" />
+
+    <TextView
+        android:id="@+id/PiTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/PiLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/stepsEditText" />
+
+    <TextView
+        android:id="@+id/ChronoTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@+id/ChronoTimeLabelTextView"
+        app:layout_constraintTop_toBottomOf="@+id/PiTextView" />
+
+    <TextView
+        android:id="@+id/CppTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/CppTimeLabelTextView"
+        app:layout_constraintLeft_toRightOf="@+id/CppTimeLabelTextView" />
+
+    <TextView
+        android:id="@+id/JavaTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/JavaTimeLabelTextView"
+        app:layout_constraintLeft_toRightOf="@+id/JavaTimeLabelTextView" />
+
+    <CheckBox
+        android:id="@+id/cppCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginStart="150dp"
+        android:text="@string/cpp_checkbox"
+        app:layout_constraintBaseline_toBaselineOf="@+id/CppTimeLabelTextView"
+        app:layout_constraintLeft_toRightOf="parent" />
+
+    <CheckBox
+        android:id="@+id/javaCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginStart="150dp"
+        android:text="@string/java_checkbox"
+        app:layout_constraintBaseline_toBaselineOf="@+id/JavaTimeLabelTextView"
+        app:layout_constraintLeft_toRightOf="parent" />
+
+    <Spinner
+        android:id="@+id/coresSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/button" />" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/threads_spinner_title"
+        android:textAlignment="viewStart"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cppCheckBox"
+        app:layout_constraintLeft_toRightOf="@+id/cppCheckBox" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/javaCheckBox" />
 </android.support.constraint.ConstraintLayout>

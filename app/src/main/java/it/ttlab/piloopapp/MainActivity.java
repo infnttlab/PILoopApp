@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
     private static final String KEY_JAVA_TIME_TEXT = "key_java_time_text";
     //private TextView chronoTimeTextView;
+    /**
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
+    public native double piFromJNI(long steps, int threads);
+    //public native double timeFromJNI(long steps);
 
     private int threadsNum = 1;
 
@@ -62,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.pi_benchmark_name);
         listView = (ListView) findViewById(R.id.listView);
         //initListView();
 
@@ -93,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
                 threadsNum = 1 ;
             }
         });
-        if (savedInstanceState != null) {
+        //if (savedInstanceState != null) {
             // piTextView.setText(savedInstanceState.getCharSequence(KEY_PI_TEXT));
             // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
             // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
-        }
+        //}
     }
 
     //private void initListView() {
@@ -183,10 +190,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native double piFromJNI(long steps, int threads);
-    public native double timeFromJNI(long steps);
+
 }
