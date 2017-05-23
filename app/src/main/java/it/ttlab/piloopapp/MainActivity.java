@@ -1,16 +1,23 @@
 package it.ttlab.piloopapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static it.ttlab.piloopapp.R.id.cppCheckBox;
 
@@ -21,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
+    ListView listView;
     Activity mActivity;
     private static final String KEY_PI_TEXT = "key_pi_text";
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
@@ -48,6 +56,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        listView = (ListView) findViewById(R.id.listView);
+        //initListView();
+
+        //asciiArrayAdapter = new ArrayAdapter<AsciiCode>(this,
+        //        android.R.layout.simple_list_item_1, android.R.id.text1, Asciis);
+        //listAscii.setAdapter(asciiArrayAdapter);
 
         Spinner spinner = (Spinner) findViewById(R.id.coresSpinner);
         String[] threads = getResources().getStringArray(R.array.threads);
@@ -79,6 +100,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //private void initListView() {
+    //    Asciis = new AsciiCode[128];
+    //    for (int i = 0; i < 128; i++) {
+    //        Asciis[i] = new AsciiCode(i);
+    //    }
+    //}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            //case R.id.miPi:
+            //    Log.d("MenuItem", "PI");
+            //    Toast.makeText(this, "PI benchmark",Toast.LENGTH_SHORT).show();
+            //    Intent intent = new Intent(this, PrimesActivity.class);
+            //    startActivity(intent);
+            //    return true;
+            case R.id.miPrimes:
+                Log.d("MenuItem", "Primes benchmark");
+                Toast.makeText(this, "Primes calculus benchmark",Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(this, PrimesActivity.class);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     public void calculatePI(View view) {
 
         EditText editText = (EditText) findViewById(R.id.stepsEditText);
