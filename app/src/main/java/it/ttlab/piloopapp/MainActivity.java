@@ -3,6 +3,7 @@ package it.ttlab.piloopapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static it.ttlab.piloopapp.R.id.cppCheckBox;
 
@@ -28,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
+    public static final String LISTVIEW_FIRST_COLUMN = "First";
+    public static final String LISTVIEW_SECOND_COLUMN = "Second";
+    private ArrayList<HashMap<String,String>> list;
     ListView listView;
     Activity mActivity;
     private static final String KEY_PI_TEXT = "key_pi_text";
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
     private static final String KEY_JAVA_TIME_TEXT = "key_java_time_text";
     //private TextView chronoTimeTextView;
+
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //outState.putCharSequence(KEY_PI_TEXT,piTextView.getText());
         //outState.putCharSequence(KEY_CPP_TIME_TEXT,cppTimeTextView.getText());
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.pi_benchmark_name);
+        ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(R.string.pi_benchmark_name);
         listView = (ListView) findViewById(R.id.listView);
         //initListView();
 
@@ -80,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.coresSpinner);
         String[] threads = getResources().getStringArray(R.array.threads);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        threads);
+                android.R.layout.simple_spinner_dropdown_item,
+                threads);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //                        android.R.layout.simple_spinner_item,
         //                        threads);
@@ -91,20 +100,55 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView) view;
-                threadsNum=Integer.parseInt(tv.getText().toString());
+                threadsNum = Integer.parseInt(tv.getText().toString());
                 //m_tv.setText(tv.getText());
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                threadsNum = 1 ;
+                threadsNum = 1;
             }
         });
+        ListView lview = (ListView) findViewById(R.id.listView);
+        populateList();
+        ListViewAdapter adapter2 = new ListViewAdapter(this, list);
+        lview.setAdapter(adapter2);
         //if (savedInstanceState != null) {
-            // piTextView.setText(savedInstanceState.getCharSequence(KEY_PI_TEXT));
-            // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
-            // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
+        // piTextView.setText(savedInstanceState.getCharSequence(KEY_PI_TEXT));
+        // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
+        // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
         //}
+    }
+
+    private void populateList() {
+
+        list = new ArrayList<HashMap<String,String>>();
+
+        HashMap<String,String> temp = new HashMap<String,String>();
+        temp.put(LISTVIEW_FIRST_COLUMN, "Brand");
+        temp.put(LISTVIEW_SECOND_COLUMN, Build.BRAND);
+        list.add(temp);
+
+        HashMap<String,String> temp1 = new HashMap<String,String>();
+        temp1.put(LISTVIEW_FIRST_COLUMN, "Model");
+        temp1.put(LISTVIEW_SECOND_COLUMN, Build.MODEL);
+        list.add(temp1);
+
+        HashMap<String,String> temp2 = new HashMap<String,String>();
+        temp2.put(LISTVIEW_FIRST_COLUMN, "CPU");
+        temp2.put(LISTVIEW_SECOND_COLUMN, Build.BOARD);
+        list.add(temp2);
+
+        HashMap<String,String> temp3 = new HashMap<String,String>();
+        temp3.put(LISTVIEW_FIRST_COLUMN, "Hardware");
+        temp3.put(LISTVIEW_SECOND_COLUMN, Build.HARDWARE);
+        list.add(temp3);
+
+        HashMap<String,String> temp4 = new HashMap<String,String>();
+        temp4.put(LISTVIEW_FIRST_COLUMN, "Manufacturer");
+        temp4.put(LISTVIEW_SECOND_COLUMN, Build.MANUFACTURER);
+        list.add(temp4);
+
     }
 
     //private void initListView() {
@@ -132,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             //    return true;
             case R.id.miPrimes:
                 Log.d("MenuItem", "Primes benchmark");
-                Toast.makeText(this, "Primes calculus benchmark",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Primes calculus benchmark", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(this, PrimesActivity.class);
                 startActivity(intent2);
                 return true;
@@ -140,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public void calculatePI(View view) {
 
         EditText editText = (EditText) findViewById(R.id.stepsEditText);
@@ -153,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         long steps = Long.parseLong(stepsString);
-        
+
         if (cppCheckBox.isChecked()) {
             long t1Start = System.currentTimeMillis();
             double pi1 = piFromJNI(steps, threadsNum);
@@ -163,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             piTextView.setText(String.valueOf(pi1));
             //chronoTimeTextView.setText(String.valueOf(timeFromJNI(steps)));
             cppTimeTextView.setText(String.valueOf(elapsed1Seconds));
-        }else{
+        } else {
             cppTimeTextView.setText(R.string.not_available);
         }
         //((Activity) context).runOnUiThread(new Runnable() {
@@ -185,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             double elapsed2Seconds = t2Delta / 1000.0;
             javaTimeTextView.setText(String.valueOf(elapsed2Seconds));
             //time3TextView.postInvalidate();
-        }else{
+        } else {
             javaTimeTextView.setText(R.string.not_available);
         }
     }

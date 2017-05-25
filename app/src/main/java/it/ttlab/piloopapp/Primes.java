@@ -5,12 +5,11 @@ package it.ttlab.piloopapp;
  */
 
 public class Primes {
-    static long count = 0;
-    static long s;
 
     static long getPrimes(long tot) {
+        long count = 0, s;
         for (long i = 3; i <= tot; i++) {
-            long s = (long) Math.sqrt(i);
+            s = (long) Math.sqrt(i);
             boolean isprime = true;
             if (i % 2 == 0)
                 isprime = false;
