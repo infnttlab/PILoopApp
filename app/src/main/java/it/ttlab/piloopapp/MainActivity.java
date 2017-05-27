@@ -19,19 +19,17 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static it.ttlab.piloopapp.R.id.cppCheckBox;
+import it.ttlab.piloopapp.deviceinfo.DeviceInformation;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
+
 
     public static final String LISTVIEW_FIRST_COLUMN = "First";
     public static final String LISTVIEW_SECOND_COLUMN = "Second";
@@ -47,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native double piFromJNI(long steps, int threads);
+    //
     //public native double timeFromJNI(long steps);
 
     private int threadsNum = 1;
@@ -72,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        PiLoopApp.setContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -118,6 +117,13 @@ public class MainActivity extends AppCompatActivity {
         // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
         // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
         //}
+        JSONObject deviceInformation = DeviceInformation.getInstance().getDeviceInformation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //JSONObject deviceInformation = DeviceInformation.getInstance().getDeviceInformation();
     }
 
     private void populateList() {
@@ -148,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
         temp4.put(LISTVIEW_FIRST_COLUMN, "Manufacturer");
         temp4.put(LISTVIEW_SECOND_COLUMN, Build.MANUFACTURER);
         list.add(temp4);
+
+        HashMap<String,String> temp5 = new HashMap<String,String>();
+        temp5.put(LISTVIEW_FIRST_COLUMN, "Android");
+        temp5.put(LISTVIEW_SECOND_COLUMN, Build.FINGERPRINT);
+        list.add(temp5);
 
     }
 
@@ -201,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (cppCheckBox.isChecked()) {
             long t1Start = System.currentTimeMillis();
-            double pi1 = piFromJNI(steps, threadsNum);
+            double pi1 = Pi.piFromJNI(steps, threadsNum);
             long t1End = System.currentTimeMillis();
             long t1Delta = t1End - t1Start;
             double elapsed1Seconds = t1Delta / 1000.0;

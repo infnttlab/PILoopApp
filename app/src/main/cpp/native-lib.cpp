@@ -10,7 +10,7 @@ double mytime;
 
 extern "C"
 JNIEXPORT jdouble JNICALL
-Java_it_ttlab_piloopapp_MainActivity_piFromJNI(
+Java_it_ttlab_piloopapp_Pi_piFromJNI(
         JNIEnv *env,
         jobject /* this */,
         jlong num_steps,
@@ -41,7 +41,7 @@ Java_it_ttlab_piloopapp_MainActivity_piFromJNI(
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_it_ttlab_piloopapp_PrimesActivity_primesFromJNI(
+Java_it_ttlab_piloopapp_Primes_primesFromJNI(
         JNIEnv *env,
         jobject /* this */,
         jlong tot,

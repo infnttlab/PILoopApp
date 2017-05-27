@@ -20,14 +20,11 @@ import android.widget.Toast;
 
 public class PrimesActivity extends AppCompatActivity {
 
-    static {
-        System.loadLibrary("native-lib");
-    }
+
 
     ListView listView;
     private int threadsNum = 1;
-    public native long primesFromJNI(long steps, int threads);
-    //public native double timeFromJNI(long steps);
+        //public native double timeFromJNI(long steps);
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -130,7 +127,7 @@ public class PrimesActivity extends AppCompatActivity {
 
         if (cppCheckBox.isChecked()) {
             long t1Start = System.currentTimeMillis();
-            long pi1 = primesFromJNI(tot, threadsNum);
+            long pi1 = Primes.primesFromJNI(tot, threadsNum);
             long t1End = System.currentTimeMillis();
             long t1Delta = t1End - t1Start;
             double elapsed1Seconds = t1Delta / 1000.0;

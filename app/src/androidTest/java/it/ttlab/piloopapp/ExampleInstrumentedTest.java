@@ -35,9 +35,9 @@ public class ExampleInstrumentedTest {
     public static final long PRIMES3 = 9591;
 
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule
-            = new ActivityTestRule<>(MainActivity.class);
+    //@Rule
+    //public ActivityTestRule<MainActivity> mActivityRule
+    //        = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void useAppContext() throws Exception {
@@ -46,11 +46,30 @@ public class ExampleInstrumentedTest {
         assertEquals("it.ttlab.piloopapp", appContext.getPackageName());
 
         //MainActivity activity =new MainActivity();
-        //assertTrue(Math.abs(activity.piFromJNI(STEPS1,1) - PI) < EPSILON);
+        //assertTrue(Math.abs(Pi.piFromJNI(STEPS1,1) - PI) < EPSILON);
         //assertTrue(Math.abs(mActivityRule.getActivity().piFromJNI(STEPS1,1) - PI) < EPSILON);
     }
 
-    //@Test
+    @Test
+    public void pi_isCorrect() throws Exception {
+        assertTrue(Math.abs(Pi.piFromJNI(STEPS1,4) - PI) < EPSILON);
+        assertTrue(Math.abs(Pi.piFromJNI(STEPS1,4) - PI) < EPSILON);
+        assertTrue(Math.abs(Pi.piFromJNI(STEPS1,4) - PI) < EPSILON);
+        assertTrue(Math.abs(Pi.getPI(STEPS1) - PI) < EPSILON);
+        assertTrue(Math.abs(Pi.getPI(STEPS2) - PI) < EPSILON);
+        assertTrue(Math.abs(Pi.getPI(STEPS3) - PI) < EPSILON);
+    }
+
+    @Test
+    public void primes_isCorrect() throws Exception {
+        assertEquals(PRIMES1,Primes.primesFromJNI(NUMBER1,4));
+        assertEquals(PRIMES2,Primes.primesFromJNI(NUMBER2,4));
+        assertEquals(PRIMES3,Primes.primesFromJNI(NUMBER3,4));
+        assertEquals(PRIMES1,Primes.getPrimes(NUMBER1));
+        assertEquals(PRIMES2,Primes.getPrimes(NUMBER2));
+        assertEquals(PRIMES3,Primes.getPrimes(NUMBER3));
+    }
+        //@Test
     //public void testGreet() {
     //    onView(withId(R.id.PiTextView))
     //            .perform(typeText(String.valueOf("15")), closeSoftKeyboard());

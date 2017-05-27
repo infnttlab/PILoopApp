@@ -6,7 +6,13 @@ package it.ttlab.piloopapp;
 
 public class Primes {
 
-    static long getPrimes(long tot) {
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    public static native long primesFromJNI(long steps, int threads);
+
+    public static long getPrimes(long tot) {
         long count = 0, s;
         for (long i = 3; i <= tot; i++) {
             s = (long) Math.sqrt(i);
