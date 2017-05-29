@@ -12,7 +12,7 @@ class Pi {
         System.loadLibrary("native-lib");
     }
 
-    public static native double getJNIPI(long steps, int threads);
+    static native double getJNIPI(long steps, int threads);
 
     static double getPI(long num_steps){
         double x, pi, sum =0;
