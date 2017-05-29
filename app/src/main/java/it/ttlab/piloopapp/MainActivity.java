@@ -1,6 +1,5 @@
 package it.ttlab.piloopapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -8,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,34 +19,27 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import it.ttlab.piloopapp.deviceinfo.DeviceInformation;
+import it.ttlab.piloopapp.deviceinfo.GetPropProperty;
+
+/**
+ * Created by Andrea Ferraro on 07/05/2017.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     public static final String LISTVIEW_FIRST_COLUMN = "First";
     public static final String LISTVIEW_SECOND_COLUMN = "Second";
-    private ArrayList<HashMap<String,String>> list;
+
     ListView listView;
-    Activity mActivity;
     private static final String KEY_PI_TEXT = "key_pi_text";
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
     private static final String KEY_JAVA_TIME_TEXT = "key_java_time_text";
     //private TextView chronoTimeTextView;
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    //
-    //public native double timeFromJNI(long steps);
 
     private int threadsNum = 1;
 
@@ -54,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         //setContentView(R.layout.activity_main);
-
     }
 
     @Override
@@ -69,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         PiLoopApp.setContext(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
         //asciiArrayAdapter = new ArrayAdapter<AsciiCode>(this,
         //        android.R.layout.simple_list_item_1, android.R.id.text1, Asciis);
         //listAscii.setAdapter(asciiArrayAdapter);
-
         Spinner spinner = (Spinner) findViewById(R.id.coresSpinner);
         String[] threads = getResources().getStringArray(R.array.threads);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 threads);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -109,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ListView lview = (ListView) findViewById(R.id.listView);
-        populateList();
+        //ArrayList<HashMap<String,String>> list= getHashPropertyList();
+        List<Pair<String,String>> list = getPairPropertyList();
         ListViewAdapter adapter2 = new ListViewAdapter(this, list);
         lview.setAdapter(adapter2);
         //if (savedInstanceState != null) {
@@ -117,57 +108,47 @@ public class MainActivity extends AppCompatActivity {
         // cppTimeTextView.setText(savedInstanceState.getCharSequence(KEY_CPP_TIME_TEXT));
         // javaTimeTextView.setText(savedInstanceState.getCharSequence(KEY_JAVA_TIME_TEXT));
         //}
-        JSONObject deviceInformation = DeviceInformation.getInstance().getDeviceInformation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //JSONObject deviceInformation = DeviceInformation.getInstance().getDeviceInformation();
+        JSONObject deviceInformation = DeviceInformation.getInstance().getDeviceInformation();
     }
 
-    private void populateList() {
+    private List<Pair<String,String>> getPairPropertyList() {
+        GetPropProperty getPropProperty = new GetPropProperty();
+        return getPropProperty.getKeyValuePairPropertyList();
+    }
 
-        list = new ArrayList<HashMap<String,String>>();
-
-        HashMap<String,String> temp = new HashMap<String,String>();
+    private ArrayList<HashMap<String,String>> getHashPropertyList() {
+        ArrayList<HashMap<String,String>> list = new ArrayList<>();
+        HashMap<String,String> temp = new HashMap<>();
         temp.put(LISTVIEW_FIRST_COLUMN, "Brand");
         temp.put(LISTVIEW_SECOND_COLUMN, Build.BRAND);
         list.add(temp);
-
-        HashMap<String,String> temp1 = new HashMap<String,String>();
+        HashMap<String,String> temp1 = new HashMap<>();
         temp1.put(LISTVIEW_FIRST_COLUMN, "Model");
         temp1.put(LISTVIEW_SECOND_COLUMN, Build.MODEL);
         list.add(temp1);
-
-        HashMap<String,String> temp2 = new HashMap<String,String>();
+        HashMap<String,String> temp2 = new HashMap<>();
         temp2.put(LISTVIEW_FIRST_COLUMN, "CPU");
         temp2.put(LISTVIEW_SECOND_COLUMN, Build.BOARD);
         list.add(temp2);
-
-        HashMap<String,String> temp3 = new HashMap<String,String>();
+        HashMap<String,String> temp3 = new HashMap<>();
         temp3.put(LISTVIEW_FIRST_COLUMN, "Hardware");
         temp3.put(LISTVIEW_SECOND_COLUMN, Build.HARDWARE);
         list.add(temp3);
-
-        HashMap<String,String> temp4 = new HashMap<String,String>();
+        HashMap<String,String> temp4 = new HashMap<>();
         temp4.put(LISTVIEW_FIRST_COLUMN, "Manufacturer");
         temp4.put(LISTVIEW_SECOND_COLUMN, Build.MANUFACTURER);
         list.add(temp4);
-
-        HashMap<String,String> temp5 = new HashMap<String,String>();
+        HashMap<String,String> temp5 = new HashMap<>();
         temp5.put(LISTVIEW_FIRST_COLUMN, "Android");
         temp5.put(LISTVIEW_SECOND_COLUMN, Build.FINGERPRINT);
         list.add(temp5);
-
+        return list;
     }
-
-    //private void initListView() {
-    //    Asciis = new AsciiCode[128];
-    //    for (int i = 0; i < 128; i++) {
-    //        Asciis[i] = new AsciiCode(i);
-    //    }
-    //}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,13 +187,10 @@ public class MainActivity extends AppCompatActivity {
         String stepsString = editText.getText().toString();
         CheckBox javaCheckBox = (CheckBox) findViewById(R.id.javaCheckBox);
         CheckBox cppCheckBox = (CheckBox) findViewById(R.id.cppCheckBox);
-
-
         long steps = Long.parseLong(stepsString);
-
         if (cppCheckBox.isChecked()) {
             long t1Start = System.currentTimeMillis();
-            double pi1 = Pi.piFromJNI(steps, threadsNum);
+            double pi1 = Pi.getJNIPI(steps, threadsNum);
             long t1End = System.currentTimeMillis();
             long t1Delta = t1End - t1Start;
             double elapsed1Seconds = t1Delta / 1000.0;

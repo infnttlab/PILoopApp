@@ -1,16 +1,20 @@
 package it.ttlab.piloopapp.deviceinfo;
 
+import android.util.Pair;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import it.ttlab.piloopapp.PiLoopApp;
 
 
 public class GetPropProperty implements Property {
-    static List<String> whitelist = new ArrayList<String>() {{
+    private static List<Pair<String, String>> keyValuePairList = new ArrayList<>();
+    private static List<String> whitelist = new ArrayList<String>() {{
         add("ro.product.device");
         add("ro.product.manufacturer");
         add("ro.product.model");
@@ -38,11 +42,27 @@ public class GetPropProperty implements Property {
     }};
 
 
+    //@Override
+    public List<Pair<String, String>> getKeyValuePairPropertyList() {
+        JSONObject jsonObject = new JSONObject();
+        SystemProperty property = new SystemProperty(PiLoopApp.getContext());
+        for (String key : whitelist) {
+            try {
+                String value = property.getOrThrow(key);
+                //jsonObject.put(key, value);
+                keyValuePairList.add(new Pair<>(key, value));
+            } catch (NoSuchPropertyException e) {
+                keyValuePairList.add(new Pair<>(key, "N/A"));
+            }
+        }
+        return keyValuePairList;
+    }
+
     @Override
     public Object getProperty() {
         JSONObject jsonObject = new JSONObject();
         SystemProperty property = new SystemProperty(PiLoopApp.getContext());
-        for(String key: whitelist) {
+        for (String key : whitelist) {
             try {
                 String value = property.getOrThrow(key);
                 jsonObject.put(key, value);

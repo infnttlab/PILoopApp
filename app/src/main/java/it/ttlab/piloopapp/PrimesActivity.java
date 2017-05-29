@@ -18,27 +18,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Created by Andrea Ferraro on 23/05/2017.
+ */
+
 public class PrimesActivity extends AppCompatActivity {
-
-
 
     ListView listView;
     private int threadsNum = 1;
-        //public native double timeFromJNI(long steps);
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //setContentView(R.layout.activity_main);
-
     }
 
     @Override
-    protected void onSaveInstanceState (Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //outState.putCharSequence(KEY_PI_TEXT,piTextView.getText());
-        //outState.putCharSequence(KEY_CPP_TIME_TEXT,cppTimeTextView.getText());
-        //outState.putCharSequence(KEY_JAVA_TIME_TEXT,javaTimeTextView.getText());
     }
 
     @Override
@@ -51,35 +47,24 @@ public class PrimesActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.primes_benchmark_name);
+        ((TextView) toolbar.findViewById(R.id.toolbar_title)).setText(R.string.primes_benchmark_name);
         listView = (ListView) findViewById(R.id.listView);
-        //initListView();
-
-        //asciiArrayAdapter = new ArrayAdapter<AsciiCode>(this,
-        //        android.R.layout.simple_list_item_1, android.R.id.text1, Asciis);
-        //listAscii.setAdapter(asciiArrayAdapter);
-
         Spinner spinner = (Spinner) findViewById(R.id.coresSpinner);
         String[] threads = getResources().getStringArray(R.array.threads);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 threads);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-        //                        android.R.layout.simple_spinner_item,
-        //                        threads);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_checked);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView tv = (TextView) view;
-                threadsNum=Integer.parseInt(tv.getText().toString());
-                //m_tv.setText(tv.getText());
+                threadsNum = Integer.parseInt(tv.getText().toString());
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                threadsNum = 1 ;
+                threadsNum = 1;
             }
         });
     }
@@ -92,11 +77,10 @@ public class PrimesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.miPi:
                 Log.d("MenuItem", "PI");
-                Toast.makeText(this, "PI calculus benchmark",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "PI calculus benchmark", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
@@ -127,14 +111,14 @@ public class PrimesActivity extends AppCompatActivity {
 
         if (cppCheckBox.isChecked()) {
             long t1Start = System.currentTimeMillis();
-            long pi1 = Primes.primesFromJNI(tot, threadsNum);
+            long pi1 = Primes.getJNIPrimes(tot, threadsNum);
             long t1End = System.currentTimeMillis();
             long t1Delta = t1End - t1Start;
             double elapsed1Seconds = t1Delta / 1000.0;
             piTextView.setText(String.valueOf(pi1));
             //chronoTimeTextView.setText(String.valueOf(timeFromJNI(steps)));
             cppTimeTextView.setText(String.valueOf(elapsed1Seconds));
-        }else{
+        } else {
             cppTimeTextView.setText(R.string.not_available);
         }
         //((Activity) context).runOnUiThread(new Runnable() {
@@ -156,11 +140,10 @@ public class PrimesActivity extends AppCompatActivity {
             double elapsed2Seconds = t2Delta / 1000.0;
             javaTimeTextView.setText(String.valueOf(elapsed2Seconds));
             //time3TextView.postInvalidate();
-        }else{
+        } else {
             javaTimeTextView.setText(R.string.not_available);
         }
     }
-
 
 
 }

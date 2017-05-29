@@ -1,18 +1,18 @@
 package it.ttlab.piloopapp;
 
 /**
- * Created by andre on 23/05/2017.
+ * Created by Andrea Ferraro on 23/05/2017.
  */
 
-public class Primes {
+class Primes {
 
     static {
         System.loadLibrary("native-lib");
     }
 
-    public static native long primesFromJNI(long steps, int threads);
+    static native long getJNIPrimes(long steps, int threads);
 
-    public static long getPrimes(long tot) {
+    static long getPrimes(long tot) {
         long count = 0, s;
         for (long i = 3; i <= tot; i++) {
             s = (long) Math.sqrt(i);
