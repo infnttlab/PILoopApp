@@ -13,7 +13,7 @@ import it.ttlab.piloopapp.PiLoopApp;
 
 
 public class GetPropProperty implements Property {
-    private static List<Pair<String, String>> keyValuePairList = new ArrayList<>();
+    //public static List<Pair<String, String>> keyValuePairList = new ArrayList<>();
     private static List<String> whitelist = new ArrayList<String>() {{
         add("ro.product.device");
         add("ro.product.manufacturer");
@@ -46,6 +46,7 @@ public class GetPropProperty implements Property {
     public List<Pair<String, String>> getKeyValuePairPropertyList() {
         JSONObject jsonObject = new JSONObject();
         SystemProperty property = new SystemProperty(PiLoopApp.getContext());
+        List<Pair<String, String>> keyValuePairList = new ArrayList<>();
         for (String key : whitelist) {
             try {
                 String value = property.getOrThrow(key);

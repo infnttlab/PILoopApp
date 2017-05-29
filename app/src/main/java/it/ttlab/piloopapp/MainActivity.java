@@ -118,7 +118,14 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Pair<String,String>> getPairPropertyList() {
         GetPropProperty getPropProperty = new GetPropProperty();
-        return getPropProperty.getKeyValuePairPropertyList();
+        List<Pair<String,String>> pairPropertyList = getPropProperty.getKeyValuePairPropertyList();
+        //List<Pair<String,String>> pairPropertyList = new ArrayList<>();
+        pairPropertyList.add(new Pair<>("Build.BRAND",Build.BRAND));
+        pairPropertyList.add(new Pair<>("Build.MODEL",Build.MODEL));
+        pairPropertyList.add(new Pair<>("Build.BOARD",Build.BOARD));
+        pairPropertyList.add(new Pair<>("Build.HARDWARE",Build.HARDWARE));
+        pairPropertyList.add(new Pair<>("Build.MANUFACTURER",Build.MANUFACTURER));
+        return pairPropertyList;
     }
 
     private ArrayList<HashMap<String,String>> getHashPropertyList() {
