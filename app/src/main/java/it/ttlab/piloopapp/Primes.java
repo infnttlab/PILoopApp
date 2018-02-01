@@ -2,6 +2,7 @@ package it.ttlab.piloopapp;
 
 /**
  * Created by Andrea Ferraro on 23/05/2017.
+ * INFN TTLab (https://ttlab.infn.it/)
  */
 
 class Primes {
@@ -27,4 +28,5 @@ class Primes {
         }
         return count;
     }
+
 }
