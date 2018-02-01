@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LISTVIEW_FIRST_COLUMN = "First";
     public static final String LISTVIEW_SECOND_COLUMN = "Second";
-
     ListView listView;
     private static final String KEY_PI_TEXT = "key_pi_text";
     private static final String KEY_CPP_TIME_TEXT = "key_cpp_time_text";
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //setContentView(R.layout.activity_main);
     }
 
     @Override
@@ -165,14 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
         switch (item.getItemId()) {
-            //case R.id.miPi:
-            //    Log.d("MenuItem", "PI");
-            //    Toast.makeText(this, "PI benchmark",Toast.LENGTH_SHORT).show();
-            //    Intent intent = new Intent(this, PrimesActivity.class);
-            //    startActivity(intent);
-            //    return true;
             case R.id.miPrimes:
                 Log.d("MenuItem", "Primes benchmark");
                 Toast.makeText(this, "Primes calculus benchmark", Toast.LENGTH_SHORT).show();
