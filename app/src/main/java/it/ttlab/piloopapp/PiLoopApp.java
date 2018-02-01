@@ -5,6 +5,7 @@ import android.content.Context;
 
 /**
  * Created by Andrea Ferraro on 27/05/2017.
+ * INFN TTLab (https://ttlab.infn.it/)
  */
 
 public class PiLoopApp extends Application {
