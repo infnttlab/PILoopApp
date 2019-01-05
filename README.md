@@ -1,8 +1,7 @@
 # PILoopApp
-This is the code repository of [PI Loop](https://play.google.com/store/apps/details?id=it.ttlab.piloopapp) an Android app by INFN TTLab (https://ttlab.infn.it) providing syntetic benchmarks built for OPEN-NEXT project (http://www.open-next.it/en/homepage-en)
+This is the code repository of [PI Loop](https://play.google.com/store/apps/details?id=it.ttlab.piloopapp) an Android app by INFN TTLab (https://ttlab.infn.it) providing syntetic benchmarks built for COSA and OPEN-NEXT project.
 
-**PI Loop** contains syntetic benchmarks ported by INFN TTLab from Linux OS (using GNU C library) to Android OS (using Bionic C library).
-
+**PI Loop** contains syntetic benchmarks ported from Linux OS (using GNU C library) to Android OS (using Bionic C library).
 
 The original Linux C++ code is hosted in (https://github.com/infnttlab/benchmarks)
 
